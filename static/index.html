@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RK OS</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">RK</div>
+
+                <div>
+                    <h1>RK OS</h1>
+                    <span>Personal Operating System</span>
+                </div>
+            </div>
+
+            <nav class="navigation">
+
+                <button class="nav-item active" data-section="dashboard">
+                    <span>⌂</span>
+                    Dashboard
+                </button>
+
+                <button class="nav-item" data-section="assistant">
+                    <span>✧</span>
+                    Personal Assistant
+                </button>
+
+                <button class="nav-item" data-section="routines">
+                    <span>◈</span>
+                    Routines
+                </button>
+
+                <button class="nav-item" data-section="learn">
+                    <span>📚</span>
+                    Learn
+                </button>
+
+                <button class="nav-item" data-section="profile">
+                    <span>○</span>
+                    Profile
+                </button>
+
+                <button class="nav-item" data-section="progress">
+                    <span>◒</span>
+                    Progress
+                </button>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                RK OS Online
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <p class="eyebrow">PERSONAL COMMAND CENTER</p>
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    <span id="backend-status">Checking system...</span>
+                </div>
+
+            </header>
+
+
+            <!-- Dashboard -->
+            <section id="dashboard" class="page-section active-section">
+
+                <div class="welcome-card">
+
+                    <div>
+                        <p class="eyebrow">WELCOME BACK</p>
+
+                        <h3 id="dashboard-greeting">One system to manage yourself, study, and improve.</h3>
+
+                        <p>
+                            Your priorities, routines, and study plan in one place.
+                        </p>
+                    </div>
+
+                    <div class="date-box">
+                        <span id="current-day">--</span>
+                        <strong id="current-date">--</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <span class="stat-label">Today's routines</span>
+                        <strong id="dashboard-routine-completion">0/0</strong>
+                        <small>Habits done today</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Focus sessions</span>
+                        <strong id="dashboard-study-sessions-card">0</strong>
+                        <small>Completed today</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Questions</span>
+                        <strong id="dashboard-question-total">0</strong>
+                        <small>Practice and quiz</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Accuracy</span>
+                        <strong id="dashboard-overall-accuracy">0%</strong>
+                        <small>Practice and quiz</small>
+                    </div>
+
+                </div>
+
+
+                <div class="section-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">TODAY</p>
+                                <h3>Study</h3>
+                            </div>
+
+                            <button class="small-button">
+                                + Add
+                            </button>
+                        </div>
+
+                        <div id="dashboard-study-summary" class="dashboard-study-summary">
+                            <div class="dashboard-study-row">
+                                <span>Study time</span>
+                                <strong id="dashboard-study-time">0m</strong>
+                            </div>
+                            <div class="dashboard-study-row">
+                                <span>Sessions</span>
+                                <strong id="dashboard-study-sessions">0</strong>
+                            </div>
+                            <div class="dashboard-study-row">
+                                <span>Topics studied</span>
+                                <strong id="dashboard-study-topics">0</strong>
+                            </div>
+                            <div class="dashboard-study-row">
+                                <span>Today's practice</span>
+                                <strong id="dashboard-practice-questions">0</strong>
+                            </div>
+                            <div class="dashboard-study-row">
+                                <span>Practice accuracy</span>
+                                <strong id="dashboard-practice-accuracy">0%</strong>
+                            </div>
+                            <div class="dashboard-study-row">
+                                <span>Quiz accuracy</span>
+                                <strong id="dashboard-quiz-accuracy">0%</strong>
+                            </div>
+                            <button class="small-button dashboard-study-button" type="button" onclick="document.querySelector('[data-section=\'learn\']')?.click()">
+                                Continue Learning
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">PRIORITIES</p>
+                                <h3>Today's Priorities</h3>
+                            </div>
+                        </div>
+
+                        <div id="dashboard-priorities" class="dashboard-priorities"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="section-grid dashboard-lower-grid">
+                    <div class="panel dashboard-study-panel">
+                        <div class="panel-header"><div><p class="eyebrow">SSC STUDY</p><h3 id="dashboard-current-study">Choose today's study</h3></div></div>
+                        <p id="dashboard-study-topic" class="dashboard-support-copy">Your selected subject and topic will appear here.</p>
+                        <button class="small-button dashboard-study-button" type="button" onclick="rkNavigateToSection('learn')">Continue Learning</button>
+                    </div>
+                    <div class="panel assistant-entry-panel">
+                        <div class="panel-header"><div><p class="eyebrow">RK ASSISTANT</p><h3>Ask RK</h3></div></div>
+                        <p class="dashboard-support-copy">Plan your day, manage routines, or open a study tool.</p>
+                        <button class="small-button" type="button" onclick="rkNavigateToSection('assistant')">Open Assistant</button>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div><p class="eyebrow">PROGRESS</p><h3>This week</h3></div></div>
+                        <div class="dashboard-study-row"><span>Current streak</span><strong id="dashboard-current-streak">0 days</strong></div>
+                        <div class="dashboard-study-row"><span>Weekly consistency</span><strong id="dashboard-weekly-consistency">0%</strong></div>
+                        <div class="dashboard-study-row"><span>Study time</span><strong id="dashboard-total-study-time">0m</strong></div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- Personal Assistant -->
+            <section id="assistant" class="page-section assistant-page">
+                <div class="page-heading">
+                    <p class="eyebrow">RK OS</p>
+                    <h3>RK Assistant</h3>
+                    <p>Your personal command center.</p>
+                </div>
+                <div class="assistant-conversation" id="assistant-conversation" aria-live="polite">
+                    <div class="assistant-message assistant-message-rk"><strong>RK</strong><p>How can I help you today?</p></div>
+                </div>
+                <form id="assistant-form" class="assistant-composer" onsubmit="event.preventDefault(); rkSendAssistantMessage();">
+                    <textarea id="assistant-input" rows="2" placeholder="Ask RK anything..." aria-label="Message RK Assistant"></textarea>
+                    <button class="primary-button" type="submit">Send</button>
+                </form>
+                <div class="assistant-quick-actions">
+                    <button type="button" onclick="rkAssistantQuickAction('Show my routines for today')">Today's Routine</button>
+                    <button type="button" onclick="rkAssistantQuickAction('Open my SSC study plan')">Study Now</button>
+                    <button type="button" onclick="rkAssistantQuickAction('Start a 25 minute focus session')">Start Focus</button>
+                    <button type="button" onclick="rkAssistantQuickAction('How am I performing this week?')">My Progress</button>
+                </div>
+                <section class="assistant-recent-actions"><div class="routine-section-heading"><h4>Recent Actions</h4></div><div id="assistant-recent-actions"></div></section>
+                <aside class="automation-boundary"><strong>Automation connectors</strong><span id="automation-capability-status">No external mobile or service integrations are connected.</span></aside>
+            </section>
+
+
+            <!-- Routines: existing Tasks, Habits, and Goals stay API-backed -->
+            <section id="routines" class="page-section routines-page">
+                <div class="page-heading">
+                    <p class="eyebrow">PERSONAL EXECUTION</p>
+                    <h3>Routines</h3>
+                    <p>Habits, tasks, and goals in one place.</p>
+                </div>
+                <div class="routine-summary-strip">
+                    <div><span>Today's habits</span><strong id="routine-habit-completion">0 / 0</strong></div>
+                    <div><span>Tasks complete</span><strong id="routine-task-completion">0 / 0</strong></div>
+                    <div><span>Current streak</span><strong id="routine-current-streak">0 days</strong></div>
+                    <div><span>Weekly consistency</span><strong id="routine-weekly-consistency">0%</strong></div>
+                </div>
+                <div class="routines-grid">
+            <section id="tasks" class="routine-panel routine-task-panel">
+
+                <div class="page-heading">
+                    <p class="eyebrow">PRODUCTIVITY</p>
+                    <h3>Tasks</h3>
+                    <p>Manage the actions that move you forward.</p>
+                </div>
+
+                <div class="task-manager">
+
+    <form
+    id="task-form"
+    class="task-form"
+    onsubmit="event.preventDefault(); rkAddTask();"
+>
+    <div class="task-input-group">
+        <input
+            type="text"
+            id="task-title"
+            name="title"
+            placeholder="What needs to be done?"
+            autocomplete="off"
+        >
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            + Add Task
+        </button>
+    </div>
+</form>
+
+    <div class="task-section-heading">
+    <h4>Tasks</h4>
+    <span id="active-task-count">0 active</span>
+</div>
+
+    <div id="tasks-list" class="tasks-list">
+    <div class="task-empty-state">
+        <div class="empty-icon">✓</div>
+        <h4>No tasks yet</h4>
+        <p>Your tasks will appear here.</p>
+    </div>
+</div>
+
+            </section>
+
+
+            <!-- Habits -->
+<section id="habits" class="routine-panel routine-habit-panel">
+
+    <div class="page-heading">
+        <div>
+            <div class="eyebrow">CONSISTENCY</div>
+            <h2>Habits</h2>
+            <p>Build the routines that make progress automatic.</p>
+        </div>
+    </div>
+
+    <form
+        id="habit-form"
+        class="habit-form"
+        onsubmit="event.preventDefault(); rkAddHabit();"
+    >
+        <div class="habit-input-group">
+
+            <input
+                type="text"
+                id="habit-name"
+                name="name"
+                placeholder="What habit do you want to build?"
+                autocomplete="off"
+            >
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                + Add Habit
+            </button>
+
+        </div>
+    </form>
+
+    <div class="habit-section-heading">
+
+        <h4>Daily Habits</h4>
+
+        <span id="active-habit-count">
+            0 active
+        </span>
+
+    </div>
+
+    <div
+        id="habits-list"
+        class="habits-list"
+    >
+
+        <div class="habit-empty-state">
+
+            <div class="empty-icon">
+                ✓
+            </div>
+
+            <h4>No habits yet</h4>
+
+            <p>
+                Add a habit you want to practice every day.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+            <!-- Goals -->
+<section id="goals" class="routine-panel routine-goal-panel">
+
+    <div class="section-header">
+        <div>
+            <div class="eyebrow">DIRECTION</div>
+            <h1>Goals</h1>
+            <p>Keep your long-term objectives visible.</p>
+        </div>
+    </div>
+
+    <div class="goal-input-row">
+
+        <input
+            type="text"
+            id="goal-title"
+            placeholder="What do you want to achieve?"
+            autocomplete="off"
+        >
+
+        <input
+            type="date"
+            id="goal-target-date"
+        >
+
+        <button
+            class="primary-button"
+            type="button"
+            onclick="rkAddGoal()"
+        >
+            + Add Goal
+        </button>
+
+    </div>
+
+    <div class="goal-list-header">
+        <h4>My Goals</h4>
+        <span id="active-goal-count">0 active</span>
+    </div>
+
+    <div id="goals-list" class="goals-list">
+
+        <div class="goal-empty-state">
+
+            <div class="goal-empty-icon">
+                ◎
+            </div>
+
+            <h4>No goals yet</h4>
+
+            <p>
+                Add a goal and start moving toward it.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+                </div>
+            </section>
+
+
+            <!-- Learn -->
+<section id="learn" class="page-section">
+
+    <div class="page-heading">
+        <p class="eyebrow">SSC PREPARATION</p>
+        <h3>Learn</h3>
+        <p>Your focused study space.</p>
+    </div>
+
+    <div class="learn-launch-grid">
+        <section class="learn-current-study">
+            <div class="learn-launch-heading"><div><p class="eyebrow">TODAY'S STUDY</p><h3 id="learn-current-subject">Loading your study plan</h3></div><span id="learn-selection-status" class="selection-status">Ready</span></div>
+            <p id="learn-current-topic" class="learn-current-topic">Your selected topic will appear here.</p>
+            <p id="learn-study-recommendation" class="learn-study-recommendation">Continue the topic you are currently studying.</p>
+            <button class="primary-button" type="button" onclick="rkOpenStudyLibrary()">Continue Learning</button>
+        </section>
+        <section class="learn-focus-panel">
+            <div class="learn-launch-heading"><div><p class="eyebrow">FOCUS TIMER</p><h3>Focus session</h3></div><span id="learn-focus-status" class="selection-status">Ready</span></div>
+            <div id="learn-focus-timer-value" class="learn-focus-timer-value">25:00</div>
+            <div class="focus-presets" role="group" aria-label="Focus timer presets">
+                <button type="button" data-minutes="25" class="active" onclick="rkSetFocusPreset(25)">25 min</button>
+                <button type="button" data-minutes="45" onclick="rkSetFocusPreset(45)">45 min</button>
+                <button type="button" data-minutes="60" onclick="rkSetFocusPreset(60)">60 min</button>
+            </div>
+            <div class="focus-controls">
+                <button class="primary-button" type="button" onclick="rkStartFocusTimer()">Start</button>
+                <button class="secondary-button" type="button" onclick="rkStudyPauseTimer()">Pause</button>
+                <button class="secondary-button" type="button" onclick="rkResetFocusTimer()">Reset</button>
+            </div>
+        </section>
+    </div>
+
+    <section class="learn-tools-section">
+        <div class="learn-section-heading"><div><p class="eyebrow">STUDY TOOLS</p><h3>Choose your next step</h3></div></div>
+        <div class="learn-tool-row">
+            <button type="button" onclick="rkOpenPracticeCurrent()"><strong>Practice</strong><span>Targeted questions</span></button>
+            <button type="button" onclick="rkOpenQuizCurrent()"><strong>Quiz</strong><span>Build a quiz</span></button>
+            <button type="button" onclick="rkOpenRevision()"><strong>Revision</strong><span>Review weak topics</span></button>
+            <button type="button" disabled><strong>Mock Test</strong><span>Coming next</span></button>
+        </div>
+    </section>
+
+    <section class="learn-today-progress" aria-label="Today's study progress">
+        <div class="learn-section-heading"><div><p class="eyebrow">TODAY</p><h3>Study progress</h3></div></div>
+        <div class="learn-today-metrics">
+            <div><span>Study time</span><strong id="learn-today-study-time">0m</strong></div>
+            <div><span>Questions</span><strong id="learn-today-questions">0</strong></div>
+            <div><span>Accuracy</span><strong id="learn-today-accuracy">0%</strong></div>
+        </div>
+    </section>
+
+    <details id="learn-library" class="learn-library-details">
+        <summary>Browse SSC subjects and topics</summary>
+    <div id="study-overview" class="learn-shell"></div>
+    <div id="study-detail-panel" class="study-detail-panel"></div>
+    <section id="study-session-history" class="study-session-history" aria-label="Recent study sessions"></section>
+    </details>
+
+    <dialog id="study-note-dialog" class="study-note-dialog">
+        <div class="study-note-dialog-header">
+            <div>
+                <p class="eyebrow">STUDY NOTE</p>
+                <h3 id="study-note-title"></h3>
+            </div>
+            <button class="study-note-close" type="button" aria-label="Close note" onclick="document.getElementById('study-note-dialog').close()">×</button>
+        </div>
+        <div id="study-note-content" class="study-note-content"></div>
+    </dialog>
+
+    <dialog id="practice-dialog" class="study-note-dialog practice-dialog" aria-labelledby="practice-dialog-title">
+        <div class="study-note-dialog-header">
+            <div>
+                <p class="eyebrow">PRACTICE</p>
+                <h3 id="practice-dialog-title">Question Practice</h3>
+            </div>
+            <button class="study-note-close" type="button" aria-label="Close practice" onclick="document.getElementById('practice-dialog').close()">×</button>
+        </div>
+        <div class="practice-filters">
+            <label>Subject<select id="practice-subject" onchange="rkPracticeSubjectChanged()"></select></label>
+            <label>Topic<select id="practice-topic"></select></label>
+            <label>Difficulty<select id="practice-difficulty"><option>Mixed</option><option>Easy</option><option>Medium</option><option>Hard</option></select></label>
+            <button class="primary-button" type="button" onclick="rkLoadPracticeQuestionsFromFilters()">Start Practice</button>
+        </div>
+        <div id="practice-question-view" class="practice-question-view">
+            <p class="study-empty-state">Choose a subject and topic, then start practice.</p>
+        </div>
+    </dialog>
+
+    <dialog id="quiz-dialog" class="study-note-dialog quiz-dialog" aria-labelledby="quiz-dialog-title">
+        <div class="study-note-dialog-header">
+            <div>
+                <p class="eyebrow">SSC PREPARATION</p>
+                <h3 id="quiz-dialog-title">Quiz Studio</h3>
+            </div>
+            <button class="study-note-close" type="button" aria-label="Close quiz studio" onclick="rkCloseQuizStudio()">×</button>
+        </div>
+        <div id="quiz-setup" class="quiz-setup">
+            <div class="practice-filters quiz-filters">
+                <label>Subject<select id="quiz-subject" onchange="rkQuizSubjectChanged()"></select></label>
+                <label>Topic<select id="quiz-topic" onchange="rkRefreshQuizAvailability()"></select></label>
+                <label>Difficulty<select id="quiz-difficulty" onchange="rkRefreshQuizAvailability()"><option>Mixed</option><option>Easy</option><option>Medium</option><option>Hard</option></select></label>
+                <label>Questions<select id="quiz-question-count" onchange="rkRefreshQuizAvailability()"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></label>
+            </div>
+            <p id="quiz-available-count" class="quiz-available-count"></p>
+            <button class="primary-button quiz-start-button" type="button" onclick="rkStartQuiz()">Start Quiz</button>
+            <div id="quiz-performance-summary" class="quiz-performance-summary"></div>
+            <section class="quiz-history-section">
+                <div class="quiz-history-heading"><div><p class="eyebrow">PERFORMANCE</p><h4>Quiz History</h4></div></div>
+                <div id="quiz-history-list" class="quiz-history-list"></div>
+            </section>
+        </div>
+        <div id="quiz-session-view" class="quiz-session-view" hidden></div>
+    </dialog>
+
+    <dialog id="revision-dialog" class="study-note-dialog revision-dialog" aria-labelledby="revision-dialog-title">
+        <div class="study-note-dialog-header">
+            <div>
+                <p class="eyebrow">REVISION</p>
+                <h3 id="revision-dialog-title">My Revision</h3>
+            </div>
+            <button class="study-note-close" type="button" aria-label="Close revision" onclick="document.getElementById('revision-dialog').close()">×</button>
+        </div>
+        <div id="revision-content" class="revision-content"></div>
+    </dialog>
+
+</section>
+
+            <!-- Profile -->
+<section id="profile" class="page-section profile-page">
+    <div class="page-heading">
+        <p class="eyebrow">YOUR RK OS</p>
+        <h3>Profile</h3>
+        <p>Your study targets, preferences, and personal statistics.</p>
+    </div>
+    <div class="profile-layout">
+        <section class="profile-summary-panel">
+            <div id="profile-avatar" class="profile-avatar">RK</div>
+            <h3 id="profile-display-name">RK User</h3>
+            <p id="profile-display-bio">Your personal study profile.</p>
+            <div class="profile-stat-list">
+                <div><span>Current streak</span><strong id="profile-current-streak">0 days</strong></div>
+                <div><span>Total study time</span><strong id="profile-total-study-time">0m</strong></div>
+                <div><span>Completed routines</span><strong id="profile-routines-completed">0</strong></div>
+                <div><span>Study accuracy</span><strong id="profile-study-accuracy">0%</strong></div>
+            </div>
+        </section>
+        <form id="profile-form" class="profile-edit-panel" onsubmit="event.preventDefault(); rkSaveProfile();">
+            <h3>Profile details</h3>
+            <label>Name<input id="profile-name" name="name" maxlength="80" required></label>
+            <label>Short bio<textarea id="profile-bio" name="bio" rows="2" maxlength="240"></textarea></label>
+            <label>Daily study target<input id="profile-study-target" name="study_target" type="number" min="1" max="1440"></label>
+            <label>SSC CGL target<input id="profile-exam-target" name="exam_target" maxlength="120"></label>
+            <label>Preferences<textarea id="profile-preferences" name="preferences" rows="2" maxlength="500"></textarea></label>
+            <label>Assistant preferences<textarea id="profile-assistant-preferences" name="assistant_preferences" rows="2" maxlength="500"></textarea></label>
+            <button class="primary-button" type="submit">Save Profile</button>
+            <p id="profile-save-status" class="profile-save-status" role="status"></p>
+        </form>
+    </div>
+</section>
+
+            <!-- Progress -->
+<section id="progress" class="page-section">
+
+    <div class="section-header">
+        <div>
+            <div class="eyebrow">PERFORMANCE</div>
+            <h1>Progress</h1>
+            <p>See how consistently you are moving forward.</p>
+        </div>
+    </div>
+
+
+    <!-- Overall Score -->
+
+    <div class="progress-overview-card">
+
+        <div class="progress-overview-content">
+
+            <div>
+                <div class="progress-label">
+                    CURRENT PERFORMANCE
+                </div>
+
+                <h2>Your RK OS Score</h2>
+
+                <p>
+                    A snapshot based on your tasks, habits and goals.
+                </p>
+            </div>
+
+            <div class="overall-score">
+                <span id="overall-score">0</span>
+                <small>%</small>
+            </div>
+
+        </div>
+
+        <div class="overall-progress-track">
+            <div
+                id="overall-progress-bar"
+                class="overall-progress-fill"
+                style="width: 0%;"
+            ></div>
+        </div>
+
+    </div>
+
+
+    <!-- Analytics Cards -->
+
+    <div class="analytics-grid">
+
+
+        <!-- Tasks -->
+
+        <div class="analytics-card">
+
+            <div class="analytics-card-top">
+                <span class="analytics-icon">✓</span>
+
+                <span
+                    id="progress-task-percent"
+                    class="analytics-percent"
+                >
+                    0%
+                </span>
+            </div>
+
+            <h3>Tasks</h3>
+
+            <p id="progress-task-summary">
+                0 of 0 completed
+            </p>
+
+            <div class="analytics-track">
+                <div
+                    id="progress-task-bar"
+                    class="analytics-fill"
+                    style="width: 0%;"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <!-- Habits -->
+
+        <div class="analytics-card">
+
+            <div class="analytics-card-top">
+                <span class="analytics-icon">◆</span>
+
+                <span
+                    id="progress-habit-percent"
+                    class="analytics-percent"
+                >
+                    0%
+                </span>
+            </div>
+
+            <h3>Habits</h3>
+
+            <p id="progress-habit-summary">
+                0 of 0 completed
+            </p>
+
+            <div class="analytics-track">
+                <div
+                    id="progress-habit-bar"
+                    class="analytics-fill"
+                    style="width: 0%;"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <!-- Goals -->
+
+        <div class="analytics-card">
+
+            <div class="analytics-card-top">
+                <span class="analytics-icon">◎</span>
+
+                <span
+                    id="progress-goal-percent"
+                    class="analytics-percent"
+                >
+                    0%
+                </span>
+            </div>
+
+            <h3>Goals</h3>
+
+            <p id="progress-goal-summary">
+                0 goals tracked
+            </p>
+
+            <div class="analytics-track">
+                <div
+                    id="progress-goal-bar"
+                    class="analytics-fill"
+                    style="width: 0%;"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <!-- Total Items -->
+
+        <div class="analytics-card">
+
+            <div class="analytics-card-top">
+                <span class="analytics-icon">●</span>
+
+                <span class="analytics-percent">
+                    RK OS
+                </span>
+            </div>
+
+            <h3>Total Items</h3>
+
+            <p id="progress-total-items">
+                0 items tracked
+            </p>
+
+            <div class="analytics-track">
+                <div
+                    class="analytics-fill analytics-neutral"
+                    style="width: 100%;"
+                ></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <section class="study-progress-strip" aria-label="Study progress statistics">
+        <div class="study-progress-item">
+            <span>Study time</span>
+            <strong id="progress-study-time">0m</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Study sessions</span>
+            <strong id="progress-study-sessions">0</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Topics studied</span>
+            <strong id="progress-study-topics">0</strong>
+        </div>
+    </section>
+
+    <section class="study-progress-strip practice-progress-strip" aria-label="Practice performance statistics">
+        <div class="study-progress-item">
+            <span>Practice questions</span>
+            <strong id="progress-practice-questions">0</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Correct</span>
+            <strong id="progress-practice-correct">0</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Practice accuracy</span>
+            <strong id="progress-practice-accuracy">0%</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Weak topics</span>
+            <strong id="progress-practice-weak-topics">0</strong>
+        </div>
+    </section>
+
+    <section class="study-progress-strip quiz-progress-strip" aria-label="Quiz performance statistics">
+        <div class="study-progress-item">
+            <span>Quiz attempts</span>
+            <strong id="progress-quiz-attempts">0</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Quiz questions</span>
+            <strong id="progress-quiz-questions">0</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Quiz accuracy</span>
+            <strong id="progress-quiz-accuracy">0%</strong>
+        </div>
+        <div class="study-progress-item">
+            <span>Best accuracy</span>
+            <strong id="progress-quiz-best">0%</strong>
+        </div>
+    </section>
+
+
+    <!-- Current Snapshot -->
+
+    <div class="progress-note">
+
+        <div class="progress-note-icon">
+            i
+        </div>
+
+        <div>
+
+            <h4>Current snapshot</h4>
+
+            <p>
+                Your score updates automatically when you complete
+                tasks, mark habits complete, or increase goal progress.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+        </main>
+
+    </div>
+
+
+    <script src="/app.js"></script>
+
+</body>
+</html>
