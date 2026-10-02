@@ -1,0 +1,916 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rk-os.local/schemas/assistant-actions.schema.json",
+  "title": "RK OS Assistant Action Envelope",
+  "description": "Strict envelope for the RK OS assistant action tool layer. Every action is explicitly allow-listed; arbitrary function, SQL, shell, filesystem, or HTTP execution is not representable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["action"],
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "Allow-listed action identifier.",
+      "enum": [
+        "routines.summary",
+        "routines.list",
+        "routines.get",
+        "routines.history",
+        "routines.habit.create",
+        "routines.habit.update",
+        "routines.habit.complete",
+        "routines.habit.uncomplete",
+        "routines.habit.delete",
+        "routines.task.create",
+        "routines.task.update",
+        "routines.task.complete",
+        "routines.task.uncomplete",
+        "routines.task.delete",
+        "routines.goal.create",
+        "routines.goal.update",
+        "routines.goal.progress",
+        "routines.goal.delete",
+        "study.overview",
+        "study.subjects",
+        "study.topics",
+        "study.topic",
+        "study.sessions",
+        "study.today",
+        "study.weak_areas",
+        "study.recent_topics",
+        "study.revision_queue",
+        "study.start_session",
+        "study.end_session",
+        "study.mark_topic_studied",
+        "study.mark_reviewed",
+        "timer.start",
+        "timer.pause",
+        "timer.resume",
+        "timer.reset",
+        "timer.status",
+        "timer.set_duration",
+        "progress.overview",
+        "progress.today",
+        "progress.week",
+        "progress.month",
+        "progress.subject",
+        "progress.topic",
+        "progress.streak",
+        "progress.study_time",
+        "progress.accuracy",
+        "progress.practice",
+        "progress.quiz",
+        "progress.weak_areas",
+        "practice.start",
+        "practice.next",
+        "practice.submit",
+        "practice.result",
+        "practice.history",
+        "practice.weak_topics",
+        "quiz.start",
+        "quiz.next",
+        "quiz.submit",
+        "quiz.finish",
+        "quiz.result",
+        "quiz.history",
+        "quiz.performance",
+        "assistant.get_context",
+        "assistant.daily_plan",
+        "assistant.recommend_next",
+        "assistant.explain_progress",
+        "assistant.start_focus",
+        "assistant.start_practice",
+        "assistant.start_quiz"
+      ]
+    },
+    "args": {
+      "type": "object",
+      "description": "Action-specific arguments. Validated strictly against the matching per-action schema via the conditional allOf clauses below."
+    },
+    "reason": {
+      "type": "string",
+      "description": "Optional human-readable reason for the action.",
+      "maxLength": 500
+    },
+    "confirmation_required": {
+      "type": "boolean",
+      "description": "Set by the caller to signal an explicit confirmation. Ignored for non-destructive actions."
+    },
+    "request_id": {
+      "type": "string",
+      "description": "Optional caller-supplied correlation identifier.",
+      "minLength": 1,
+      "maxLength": 128
+    }
+  },
+  "allOf": [
+    { "$ref": "#/$defs/cond.routines.summary" },
+    { "$ref": "#/$defs/cond.routines.list" },
+    { "$ref": "#/$defs/cond.routines.get" },
+    { "$ref": "#/$defs/cond.routines.history" },
+    { "$ref": "#/$defs/cond.routines.habit.create" },
+    { "$ref": "#/$defs/cond.routines.habit.update" },
+    { "$ref": "#/$defs/cond.routines.habit.complete" },
+    { "$ref": "#/$defs/cond.routines.habit.uncomplete" },
+    { "$ref": "#/$defs/cond.routines.habit.delete" },
+    { "$ref": "#/$defs/cond.routines.task.create" },
+    { "$ref": "#/$defs/cond.routines.task.update" },
+    { "$ref": "#/$defs/cond.routines.task.complete" },
+    { "$ref": "#/$defs/cond.routines.task.uncomplete" },
+    { "$ref": "#/$defs/cond.routines.task.delete" },
+    { "$ref": "#/$defs/cond.routines.goal.create" },
+    { "$ref": "#/$defs/cond.routines.goal.update" },
+    { "$ref": "#/$defs/cond.routines.goal.progress" },
+    { "$ref": "#/$defs/cond.routines.goal.delete" },
+    { "$ref": "#/$defs/cond.study.overview" },
+    { "$ref": "#/$defs/cond.study.subjects" },
+    { "$ref": "#/$defs/cond.study.topics" },
+    { "$ref": "#/$defs/cond.study.topic" },
+    { "$ref": "#/$defs/cond.study.sessions" },
+    { "$ref": "#/$defs/cond.study.today" },
+    { "$ref": "#/$defs/cond.study.weak_areas" },
+    { "$ref": "#/$defs/cond.study.recent_topics" },
+    { "$ref": "#/$defs/cond.study.revision_queue" },
+    { "$ref": "#/$defs/cond.study.start_session" },
+    { "$ref": "#/$defs/cond.study.end_session" },
+    { "$ref": "#/$defs/cond.study.mark_topic_studied" },
+    { "$ref": "#/$defs/cond.study.mark_reviewed" },
+    { "$ref": "#/$defs/cond.timer.start" },
+    { "$ref": "#/$defs/cond.timer.pause" },
+    { "$ref": "#/$defs/cond.timer.resume" },
+    { "$ref": "#/$defs/cond.timer.reset" },
+    { "$ref": "#/$defs/cond.timer.status" },
+    { "$ref": "#/$defs/cond.timer.set_duration" },
+    { "$ref": "#/$defs/cond.progress.overview" },
+    { "$ref": "#/$defs/cond.progress.today" },
+    { "$ref": "#/$defs/cond.progress.week" },
+    { "$ref": "#/$defs/cond.progress.month" },
+    { "$ref": "#/$defs/cond.progress.subject" },
+    { "$ref": "#/$defs/cond.progress.topic" },
+    { "$ref": "#/$defs/cond.progress.streak" },
+    { "$ref": "#/$defs/cond.progress.study_time" },
+    { "$ref": "#/$defs/cond.progress.accuracy" },
+    { "$ref": "#/$defs/cond.progress.practice" },
+    { "$ref": "#/$defs/cond.progress.quiz" },
+    { "$ref": "#/$defs/cond.progress.weak_areas" },
+    { "$ref": "#/$defs/cond.practice.start" },
+    { "$ref": "#/$defs/cond.practice.next" },
+    { "$ref": "#/$defs/cond.practice.submit" },
+    { "$ref": "#/$defs/cond.practice.result" },
+    { "$ref": "#/$defs/cond.practice.history" },
+    { "$ref": "#/$defs/cond.practice.weak_topics" },
+    { "$ref": "#/$defs/cond.quiz.start" },
+    { "$ref": "#/$defs/cond.quiz.next" },
+    { "$ref": "#/$defs/cond.quiz.submit" },
+    { "$ref": "#/$defs/cond.quiz.finish" },
+    { "$ref": "#/$defs/cond.quiz.result" },
+    { "$ref": "#/$defs/cond.quiz.history" },
+    { "$ref": "#/$defs/cond.quiz.performance" },
+    { "$ref": "#/$defs/cond.assistant.get_context" },
+    { "$ref": "#/$defs/cond.assistant.daily_plan" },
+    { "$ref": "#/$defs/cond.assistant.recommend_next" },
+    { "$ref": "#/$defs/cond.assistant.explain_progress" },
+    { "$ref": "#/$defs/cond.assistant.start_focus" },
+    { "$ref": "#/$defs/cond.assistant.start_practice" },
+    { "$ref": "#/$defs/cond.assistant.start_quiz" }
+  ],
+  "$defs": {
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Positive record identifier."
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "duration_minutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 600
+    },
+    "timer_minutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 240
+    },
+    "percentage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "option": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D"]
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["Easy", "Medium", "Hard", "Mixed"]
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "routine_type": {
+      "type": "string",
+      "enum": ["tasks", "habits", "goals"]
+    },
+    "session_type": {
+      "type": "string",
+      "enum": ["study", "practice", "revision"]
+    },
+    "period": {
+      "type": "string",
+      "enum": ["day", "week", "month", "all"]
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "no_args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "routines.summary.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "routines.list.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "$ref": "#/$defs/routine_type" }
+      }
+    },
+    "routines.get.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "$ref": "#/$defs/routine_type" },
+        "id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "routines.history.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limit": { "$ref": "#/$defs/limit" }
+      }
+    },
+    "routines.habit.create.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "priority": { "$ref": "#/$defs/priority" }
+      }
+    },
+    "routines.habit.update.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "priority": { "$ref": "#/$defs/priority" }
+      }
+    },
+    "routines.habit.id.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "routines.task.create.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "priority": { "$ref": "#/$defs/priority" }
+      }
+    },
+    "routines.task.update.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "completed": { "type": "boolean" }
+      }
+    },
+    "routines.task.id.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "routines.goal.create.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "target_date": { "$ref": "#/$defs/date" },
+        "progress": { "$ref": "#/$defs/percentage" }
+      }
+    },
+    "routines.goal.update.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "target_date": {
+          "anyOf": [
+            { "$ref": "#/$defs/date" },
+            { "type": "null" }
+          ]
+        },
+        "progress": { "$ref": "#/$defs/percentage" }
+      }
+    },
+    "routines.goal.progress.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "progress"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "progress": { "$ref": "#/$defs/percentage" }
+      }
+    },
+    "routines.goal.id.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "study.overview.args": { "$ref": "#/$defs/no_args" },
+    "study.subjects.args": { "$ref": "#/$defs/no_args" },
+    "study.topics.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "study.topic.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topic_id"],
+      "properties": {
+        "topic_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "study.sessions.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limit": { "$ref": "#/$defs/limit" }
+      }
+    },
+    "study.today.args": { "$ref": "#/$defs/no_args" },
+    "study.weak_areas.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "study.recent_topics.args": { "$ref": "#/$defs/no_args" },
+    "study.revision_queue.args": { "$ref": "#/$defs/no_args" },
+    "study.start_session.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id"],
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" },
+        "duration_minutes": { "$ref": "#/$defs/duration_minutes" },
+        "session_type": { "$ref": "#/$defs/session_type" }
+      }
+    },
+    "study.end_session.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["session_id"],
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" },
+        "duration_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1440
+        }
+      }
+    },
+    "study.mark_topic_studied.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topic_id"],
+      "properties": {
+        "topic_id": { "$ref": "#/$defs/id" },
+        "duration_minutes": { "$ref": "#/$defs/duration_minutes" }
+      }
+    },
+    "study.mark_reviewed.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topic_id"],
+      "properties": {
+        "topic_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "timer.start.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "duration_minutes": { "$ref": "#/$defs/timer_minutes" },
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "timer.pause.args": { "$ref": "#/$defs/no_args" },
+    "timer.resume.args": { "$ref": "#/$defs/no_args" },
+    "timer.reset.args": { "$ref": "#/$defs/no_args" },
+    "timer.status.args": { "$ref": "#/$defs/no_args" },
+    "timer.set_duration.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration_minutes"],
+      "properties": {
+        "duration_minutes": { "$ref": "#/$defs/timer_minutes" }
+      }
+    },
+    "progress.overview.args": { "$ref": "#/$defs/no_args" },
+    "progress.today.args": { "$ref": "#/$defs/no_args" },
+    "progress.week.args": { "$ref": "#/$defs/no_args" },
+    "progress.month.args": { "$ref": "#/$defs/no_args" },
+    "progress.subject.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id"],
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "progress.topic.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topic_id"],
+      "properties": {
+        "topic_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "progress.streak.args": { "$ref": "#/$defs/no_args" },
+    "progress.study_time.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": { "$ref": "#/$defs/period" }
+      }
+    },
+    "progress.accuracy.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": { "$ref": "#/$defs/period" }
+      }
+    },
+    "progress.practice.args": { "$ref": "#/$defs/no_args" },
+    "progress.quiz.args": { "$ref": "#/$defs/no_args" },
+    "progress.weak_areas.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "practice.start.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" },
+        "difficulty": { "$ref": "#/$defs/difficulty" },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 50 }
+      }
+    },
+    "practice.next.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "practice.submit.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question_id", "selected_option"],
+      "properties": {
+        "question_id": { "$ref": "#/$defs/id" },
+        "selected_option": { "$ref": "#/$defs/option" },
+        "session_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "practice.result.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "practice.history.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limit": { "$ref": "#/$defs/limit" }
+      }
+    },
+    "practice.weak_topics.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "quiz.start.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id"],
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" },
+        "difficulty": { "$ref": "#/$defs/difficulty" },
+        "total_questions": { "type": "integer", "enum": [5, 10, 15, 20] }
+      }
+    },
+    "quiz.next.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "quiz.submit.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["session_id", "question_id", "selected_option"],
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" },
+        "question_id": { "$ref": "#/$defs/id" },
+        "selected_option": { "$ref": "#/$defs/option" }
+      }
+    },
+    "quiz.finish.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["session_id"],
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "quiz.result.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["session_id"],
+      "properties": {
+        "session_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "quiz.history.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limit": { "$ref": "#/$defs/limit" }
+      }
+    },
+    "quiz.performance.args": { "$ref": "#/$defs/no_args" },
+    "assistant.get_context.args": { "$ref": "#/$defs/no_args" },
+    "assistant.daily_plan.args": { "$ref": "#/$defs/no_args" },
+    "assistant.recommend_next.args": { "$ref": "#/$defs/no_args" },
+    "assistant.explain_progress.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": { "$ref": "#/$defs/period" }
+      }
+    },
+    "assistant.start_focus.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "duration_minutes": { "$ref": "#/$defs/timer_minutes" },
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "assistant.start_practice.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" },
+        "difficulty": { "$ref": "#/$defs/difficulty" }
+      }
+    },
+    "assistant.start_quiz.args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/id" },
+        "topic_id": { "$ref": "#/$defs/id" },
+        "difficulty": { "$ref": "#/$defs/difficulty" },
+        "total_questions": { "type": "integer", "enum": [5, 10, 15, 20] }
+      }
+    },
+    "cond.routines.summary": {
+      "if": { "properties": { "action": { "const": "routines.summary" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/routines.summary.args" } } }
+    },
+    "cond.routines.list": {
+      "if": { "properties": { "action": { "const": "routines.list" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/routines.list.args" } } }
+    },
+    "cond.routines.get": {
+      "if": { "properties": { "action": { "const": "routines.get" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.get.args" } } }
+    },
+    "cond.routines.history": {
+      "if": { "properties": { "action": { "const": "routines.history" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/routines.history.args" } } }
+    },
+    "cond.routines.habit.create": {
+      "if": { "properties": { "action": { "const": "routines.habit.create" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.habit.create.args" } } }
+    },
+    "cond.routines.habit.update": {
+      "if": { "properties": { "action": { "const": "routines.habit.update" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.habit.update.args" } } }
+    },
+    "cond.routines.habit.complete": {
+      "if": { "properties": { "action": { "const": "routines.habit.complete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.habit.id.args" } } }
+    },
+    "cond.routines.habit.uncomplete": {
+      "if": { "properties": { "action": { "const": "routines.habit.uncomplete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.habit.id.args" } } }
+    },
+    "cond.routines.habit.delete": {
+      "if": { "properties": { "action": { "const": "routines.habit.delete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.habit.id.args" } } }
+    },
+    "cond.routines.task.create": {
+      "if": { "properties": { "action": { "const": "routines.task.create" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.task.create.args" } } }
+    },
+    "cond.routines.task.update": {
+      "if": { "properties": { "action": { "const": "routines.task.update" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.task.update.args" } } }
+    },
+    "cond.routines.task.complete": {
+      "if": { "properties": { "action": { "const": "routines.task.complete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.task.id.args" } } }
+    },
+    "cond.routines.task.uncomplete": {
+      "if": { "properties": { "action": { "const": "routines.task.uncomplete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.task.id.args" } } }
+    },
+    "cond.routines.task.delete": {
+      "if": { "properties": { "action": { "const": "routines.task.delete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.task.id.args" } } }
+    },
+    "cond.routines.goal.create": {
+      "if": { "properties": { "action": { "const": "routines.goal.create" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.goal.create.args" } } }
+    },
+    "cond.routines.goal.update": {
+      "if": { "properties": { "action": { "const": "routines.goal.update" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.goal.update.args" } } }
+    },
+    "cond.routines.goal.progress": {
+      "if": { "properties": { "action": { "const": "routines.goal.progress" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.goal.progress.args" } } }
+    },
+    "cond.routines.goal.delete": {
+      "if": { "properties": { "action": { "const": "routines.goal.delete" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/routines.goal.id.args" } } }
+    },
+    "cond.study.overview": {
+      "if": { "properties": { "action": { "const": "study.overview" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.overview.args" } } }
+    },
+    "cond.study.subjects": {
+      "if": { "properties": { "action": { "const": "study.subjects" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.subjects.args" } } }
+    },
+    "cond.study.topics": {
+      "if": { "properties": { "action": { "const": "study.topics" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.topics.args" } } }
+    },
+    "cond.study.topic": {
+      "if": { "properties": { "action": { "const": "study.topic" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/study.topic.args" } } }
+    },
+    "cond.study.sessions": {
+      "if": { "properties": { "action": { "const": "study.sessions" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.sessions.args" } } }
+    },
+    "cond.study.today": {
+      "if": { "properties": { "action": { "const": "study.today" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.today.args" } } }
+    },
+    "cond.study.weak_areas": {
+      "if": { "properties": { "action": { "const": "study.weak_areas" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.weak_areas.args" } } }
+    },
+    "cond.study.recent_topics": {
+      "if": { "properties": { "action": { "const": "study.recent_topics" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.recent_topics.args" } } }
+    },
+    "cond.study.revision_queue": {
+      "if": { "properties": { "action": { "const": "study.revision_queue" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/study.revision_queue.args" } } }
+    },
+    "cond.study.start_session": {
+      "if": { "properties": { "action": { "const": "study.start_session" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/study.start_session.args" } } }
+    },
+    "cond.study.end_session": {
+      "if": { "properties": { "action": { "const": "study.end_session" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/study.end_session.args" } } }
+    },
+    "cond.study.mark_topic_studied": {
+      "if": { "properties": { "action": { "const": "study.mark_topic_studied" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/study.mark_topic_studied.args" } } }
+    },
+    "cond.study.mark_reviewed": {
+      "if": { "properties": { "action": { "const": "study.mark_reviewed" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/study.mark_reviewed.args" } } }
+    },
+    "cond.timer.start": {
+      "if": { "properties": { "action": { "const": "timer.start" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/timer.start.args" } } }
+    },
+    "cond.timer.pause": {
+      "if": { "properties": { "action": { "const": "timer.pause" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/timer.pause.args" } } }
+    },
+    "cond.timer.resume": {
+      "if": { "properties": { "action": { "const": "timer.resume" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/timer.resume.args" } } }
+    },
+    "cond.timer.reset": {
+      "if": { "properties": { "action": { "const": "timer.reset" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/timer.reset.args" } } }
+    },
+    "cond.timer.status": {
+      "if": { "properties": { "action": { "const": "timer.status" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/timer.status.args" } } }
+    },
+    "cond.timer.set_duration": {
+      "if": { "properties": { "action": { "const": "timer.set_duration" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/timer.set_duration.args" } } }
+    },
+    "cond.progress.overview": {
+      "if": { "properties": { "action": { "const": "progress.overview" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.overview.args" } } }
+    },
+    "cond.progress.today": {
+      "if": { "properties": { "action": { "const": "progress.today" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.today.args" } } }
+    },
+    "cond.progress.week": {
+      "if": { "properties": { "action": { "const": "progress.week" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.week.args" } } }
+    },
+    "cond.progress.month": {
+      "if": { "properties": { "action": { "const": "progress.month" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.month.args" } } }
+    },
+    "cond.progress.subject": {
+      "if": { "properties": { "action": { "const": "progress.subject" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/progress.subject.args" } } }
+    },
+    "cond.progress.topic": {
+      "if": { "properties": { "action": { "const": "progress.topic" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/progress.topic.args" } } }
+    },
+    "cond.progress.streak": {
+      "if": { "properties": { "action": { "const": "progress.streak" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.streak.args" } } }
+    },
+    "cond.progress.study_time": {
+      "if": { "properties": { "action": { "const": "progress.study_time" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.study_time.args" } } }
+    },
+    "cond.progress.accuracy": {
+      "if": { "properties": { "action": { "const": "progress.accuracy" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.accuracy.args" } } }
+    },
+    "cond.progress.practice": {
+      "if": { "properties": { "action": { "const": "progress.practice" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.practice.args" } } }
+    },
+    "cond.progress.quiz": {
+      "if": { "properties": { "action": { "const": "progress.quiz" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.quiz.args" } } }
+    },
+    "cond.progress.weak_areas": {
+      "if": { "properties": { "action": { "const": "progress.weak_areas" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/progress.weak_areas.args" } } }
+    },
+    "cond.practice.start": {
+      "if": { "properties": { "action": { "const": "practice.start" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/practice.start.args" } } }
+    },
+    "cond.practice.next": {
+      "if": { "properties": { "action": { "const": "practice.next" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/practice.next.args" } } }
+    },
+    "cond.practice.submit": {
+      "if": { "properties": { "action": { "const": "practice.submit" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/practice.submit.args" } } }
+    },
+    "cond.practice.result": {
+      "if": { "properties": { "action": { "const": "practice.result" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/practice.result.args" } } }
+    },
+    "cond.practice.history": {
+      "if": { "properties": { "action": { "const": "practice.history" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/practice.history.args" } } }
+    },
+    "cond.practice.weak_topics": {
+      "if": { "properties": { "action": { "const": "practice.weak_topics" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/practice.weak_topics.args" } } }
+    },
+    "cond.quiz.start": {
+      "if": { "properties": { "action": { "const": "quiz.start" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/quiz.start.args" } } }
+    },
+    "cond.quiz.next": {
+      "if": { "properties": { "action": { "const": "quiz.next" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/quiz.next.args" } } }
+    },
+    "cond.quiz.submit": {
+      "if": { "properties": { "action": { "const": "quiz.submit" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/quiz.submit.args" } } }
+    },
+    "cond.quiz.finish": {
+      "if": { "properties": { "action": { "const": "quiz.finish" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/quiz.finish.args" } } }
+    },
+    "cond.quiz.result": {
+      "if": { "properties": { "action": { "const": "quiz.result" } }, "required": ["action"] },
+      "then": { "required": ["args"], "properties": { "args": { "$ref": "#/$defs/quiz.result.args" } } }
+    },
+    "cond.quiz.history": {
+      "if": { "properties": { "action": { "const": "quiz.history" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/quiz.history.args" } } }
+    },
+    "cond.quiz.performance": {
+      "if": { "properties": { "action": { "const": "quiz.performance" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/quiz.performance.args" } } }
+    },
+    "cond.assistant.get_context": {
+      "if": { "properties": { "action": { "const": "assistant.get_context" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.get_context.args" } } }
+    },
+    "cond.assistant.daily_plan": {
+      "if": { "properties": { "action": { "const": "assistant.daily_plan" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.daily_plan.args" } } }
+    },
+    "cond.assistant.recommend_next": {
+      "if": { "properties": { "action": { "const": "assistant.recommend_next" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.recommend_next.args" } } }
+    },
+    "cond.assistant.explain_progress": {
+      "if": { "properties": { "action": { "const": "assistant.explain_progress" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.explain_progress.args" } } }
+    },
+    "cond.assistant.start_focus": {
+      "if": { "properties": { "action": { "const": "assistant.start_focus" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.start_focus.args" } } }
+    },
+    "cond.assistant.start_practice": {
+      "if": { "properties": { "action": { "const": "assistant.start_practice" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.start_practice.args" } } }
+    },
+    "cond.assistant.start_quiz": {
+      "if": { "properties": { "action": { "const": "assistant.start_quiz" } }, "required": ["action"] },
+      "then": { "properties": { "args": { "$ref": "#/$defs/assistant.start_quiz.args" } } }
+    }
+  }
+}
