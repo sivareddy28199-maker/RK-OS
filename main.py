@@ -6,6 +6,8 @@ import re
 import sqlite3
 from pathlib import Path
 
+import assistant_actions
+
 # Project location
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -3134,9 +3136,37 @@ def rk_assistant_dispatch(command: str):
     return None, "That capability isn't connected yet.", None
 
 
+def _rk_assistant_structured_command(payload: dict):
+    result = assistant_actions.dispatch_action(payload)
+    created_at = datetime.now().isoformat(timespec="seconds")
+    response = result.get("message") if result.get("success") else result["error"]["message"]
+    conn = get_db()
+    conn.executemany(
+        "INSERT INTO assistant_history (role, content, action, created_at) VALUES (?, ?, ?, ?)",
+        [("user", json.dumps(payload), None, created_at), ("assistant", response, result.get("action"), created_at)],
+    )
+    conn.commit()
+    conn.close()
+    return {
+        "response": response,
+        "action": result.get("action"),
+        "data": result.get("data"),
+        "success": result.get("success", False),
+        "error": result.get("error"),
+        "permission": result.get("permission"),
+        "created_at": created_at,
+    }
+
+
 @app.post("/api/assistant/command")
 def rk_assistant_command(payload: dict):
     ensure_profile_tables()
+
+    # Structured action envelope: {action, args, ...} goes through the strict
+    # allow-listed dispatcher. Everything else keeps the natural-language path.
+    if isinstance(payload, dict) and isinstance(payload.get("action"), str):
+        return _rk_assistant_structured_command(payload)
+
     command = str(payload.get("command") or "").strip()
     if not command:
         raise HTTPException(status_code=422, detail="Enter a message for RK Assistant")
@@ -3150,6 +3180,34 @@ def rk_assistant_command(payload: dict):
     conn.commit()
     conn.close()
     return {"response": response, "action": action, "data": data, "created_at": created_at}
+
+
+@app.post("/api/assistant/action")
+def rk_assistant_action(envelope: dict):
+    """Execute an explicit allow-listed assistant action envelope."""
+    ensure_profile_tables()
+    result = assistant_actions.dispatch_action(envelope)
+    created_at = datetime.now().isoformat(timespec="seconds")
+    response = result.get("message") if result.get("success") else result["error"]["message"]
+    conn = get_db()
+    conn.executemany(
+        "INSERT INTO assistant_history (role, content, action, created_at) VALUES (?, ?, ?, ?)",
+        [("user", json.dumps(envelope), None, created_at), ("assistant", response, result.get("action"), created_at)],
+    )
+    conn.commit()
+    conn.close()
+    result["created_at"] = created_at
+    return result
+
+
+@app.get("/api/assistant/actions")
+def rk_assistant_action_catalog():
+    """Expose the allow-list and permission model (read-only)."""
+    return {
+        "actions": list(assistant_actions.ALLOWED_ACTIONS),
+        "permissions": assistant_actions.PERMISSIONS,
+        "catalog": assistant_actions.get_action_catalog(),
+    }
 
 
 # =========================

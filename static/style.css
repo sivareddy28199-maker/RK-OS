@@ -4331,3 +4331,1306 @@ input {
         gap: 4px;
     }
 }
+
+
+/* =========================================================
+   RK OS — DARK FUTURISTIC THEME LAYER
+   Visual restyling only. Layout, structure, content and
+   behaviour are unchanged. Pure CSS override.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. DESIGN TOKENS
+   --------------------------------------------------------- */
+
+:root {
+    color-scheme: dark;
+
+    --bg: #05060f;
+    --bg-accent: #0a0b1e;
+    --bg-elevated: #0e1024;
+
+    --surface: rgba(21, 25, 55, 0.62);
+    --surface-strong: rgba(30, 36, 78, 0.85);
+    --surface-soft: rgba(31, 38, 84, 0.42);
+    --surface-pale: rgba(120, 150, 255, 0.06);
+
+    --text: #e9efff;
+    --text-soft: #aab6d8;
+    --text-muted: #7b88ae;
+
+    --border: rgba(120, 150, 255, 0.16);
+    --border-strong: rgba(125, 211, 252, 0.30);
+
+    --primary: #22d3ee;
+    --primary-strong: #0ea5e9;
+    --primary-soft: rgba(34, 211, 238, 0.10);
+
+    --violet: #8b5cf6;
+    --violet-strong: #7c3aed;
+
+    --success: #34d399;
+    --success-soft: rgba(52, 211, 153, 0.12);
+
+    --danger: #fb7185;
+
+    --shadow: 0 26px 64px rgba(2, 4, 18, 0.68);
+    --shadow-soft: 0 14px 38px rgba(2, 4, 18, 0.48);
+
+    --glow-cyan: 0 0 26px rgba(34, 211, 238, 0.34);
+    --glow-violet: 0 0 28px rgba(139, 92, 246, 0.30);
+
+    --radius: 22px;
+    --radius-sm: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   2. BASE + BACKGROUND TREATMENT
+   --------------------------------------------------------- */
+
+html {
+    font-family:
+        Inter,
+        "SF Pro Display",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background:
+        radial-gradient(1100px 620px at 10% -10%, rgba(124, 58, 237, 0.22), transparent 60%),
+        radial-gradient(900px 540px at 94% 2%, rgba(34, 211, 238, 0.13), transparent 56%),
+        radial-gradient(760px 720px at 50% 118%, rgba(56, 89, 255, 0.12), transparent 62%),
+        linear-gradient(180deg, #070818 0%, #05060f 46%, #04050d 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background: rgba(34, 211, 238, 0.28);
+    color: #ffffff;
+}
+
+:focus-visible {
+    outline: 2px solid rgba(34, 211, 238, 0.65);
+    outline-offset: 2px;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120, 150, 255, 0.32) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(34, 211, 238, 0.45), rgba(139, 92, 246, 0.45));
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+
+/* ---------------------------------------------------------
+   3. SIDEBAR + NAVIGATION
+   --------------------------------------------------------- */
+
+.sidebar {
+    background: linear-gradient(180deg, rgba(13, 16, 40, 0.92), rgba(7, 9, 24, 0.94));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    box-shadow:
+        inset -1px 0 0 rgba(120, 150, 255, 0.06),
+        18px 0 60px rgba(2, 4, 18, 0.5);
+}
+
+.brand-icon {
+    background: linear-gradient(135deg, #22d3ee 0%, #6366f1 55%, #8b5cf6 100%);
+    color: #04050d;
+    font-weight: 800;
+    box-shadow:
+        0 0 0 1px rgba(160, 220, 255, 0.25),
+        0 10px 26px rgba(34, 211, 238, 0.30);
+}
+
+.brand h1 {
+    color: var(--text);
+    letter-spacing: -0.4px;
+}
+
+.brand span {
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+.nav-item {
+    background: rgba(120, 150, 255, 0.05);
+    border: 1px solid transparent;
+    color: var(--text-soft);
+}
+
+.nav-item span {
+    filter: saturate(0.9);
+}
+
+.nav-item:hover {
+    background: rgba(120, 150, 255, 0.10);
+    color: var(--text);
+    border-color: var(--border);
+    box-shadow: inset 0 0 0 1px rgba(120, 150, 255, 0.06);
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(139, 92, 246, 0.22));
+    color: #ffffff;
+    border-color: var(--border-strong);
+    box-shadow:
+        0 10px 30px rgba(34, 211, 238, 0.18),
+        inset 0 1px 0 rgba(180, 220, 255, 0.14);
+}
+
+.nav-item.active span {
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.75));
+}
+
+.sidebar-footer {
+    color: var(--text-muted);
+}
+
+.status-dot {
+    background: var(--success);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.75);
+}
+
+
+/* ---------------------------------------------------------
+   4. TOPBAR + SYSTEM STATUS
+   --------------------------------------------------------- */
+
+.eyebrow {
+    color: #67d8f0;
+    letter-spacing: 0.16em;
+}
+
+.topbar h2 {
+    color: var(--text);
+    text-shadow: 0 0 26px rgba(34, 211, 238, 0.18);
+}
+
+.system-status {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.page-heading h3,
+.page-heading h1,
+.section-header h1 {
+    color: var(--text);
+}
+
+
+/* ---------------------------------------------------------
+   5. SHARED CARD / SURFACE TREATMENT
+   --------------------------------------------------------- */
+
+.stat-card,
+.panel,
+.placeholder-panel,
+.routine-panel,
+.profile-summary-panel,
+.profile-edit-panel,
+.learn-current-study,
+.learn-focus-panel,
+.study-detail-card,
+.learn-card,
+.learn-feature,
+.subject-card,
+.learn-metric,
+.study-topic-panel,
+.study-notes-panel,
+.study-timer-panel,
+.study-topic-item,
+.study-note-card,
+.study-selected-topic,
+.practice-option,
+.practice-result,
+.practice-score-grid > div,
+.revision-today-count,
+.revision-topic-card,
+.quiz-performance-summary > div,
+.task-item,
+.rk-task-card,
+.rk-habit-card,
+.rk-goal-card,
+.analytics-card,
+.rk-seven-day-history,
+.rk-consistency-card,
+.progress-note,
+.assistant-message,
+.assistant-composer {
+    background: linear-gradient(158deg, rgba(30, 36, 80, 0.72), rgba(13, 16, 40, 0.80));
+    border: 1px solid var(--border);
+    box-shadow:
+        var(--shadow-soft),
+        inset 0 1px 0 rgba(180, 200, 255, 0.06);
+}
+
+.stat-card,
+.panel,
+.placeholder-panel,
+.routine-panel,
+.profile-summary-panel,
+.profile-edit-panel,
+.learn-current-study,
+.learn-focus-panel,
+.study-detail-card,
+.analytics-card,
+.rk-seven-day-history,
+.rk-consistency-card {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.analytics-card,
+.rk-task-card,
+.rk-habit-card,
+.rk-goal-card,
+.subject-card,
+.study-note-card,
+.study-topic-item,
+.learn-tool-row button {
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.analytics-card:hover,
+.rk-task-card:hover,
+.rk-habit-card:hover,
+.rk-goal-card:hover,
+.subject-card:hover,
+.study-note-card:hover,
+.study-topic-item:hover {
+    border-color: var(--border-strong);
+    box-shadow:
+        var(--shadow-soft),
+        0 0 22px rgba(34, 211, 238, 0.14),
+        inset 0 1px 0 rgba(180, 200, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+
+/* ---------------------------------------------------------
+   6. WELCOME + STAT + DASHBOARD
+   --------------------------------------------------------- */
+
+.welcome-card {
+    background:
+        radial-gradient(120% 150% at 100% 0%, rgba(34, 211, 238, 0.18), transparent 55%),
+        linear-gradient(135deg, rgba(46, 32, 96, 0.95), rgba(15, 18, 46, 0.96));
+    border: 1px solid rgba(139, 92, 246, 0.34);
+    color: #ffffff;
+    box-shadow:
+        var(--shadow),
+        inset 0 1px 0 rgba(200, 210, 255, 0.10);
+}
+
+.welcome-card .eyebrow {
+    color: #9db8ff;
+}
+
+.welcome-card h3 {
+    color: #ffffff;
+}
+
+.welcome-card p:not(.eyebrow) {
+    color: #c3cdec;
+}
+
+.date-box {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border-strong);
+    box-shadow: inset 0 1px 0 rgba(180, 200, 255, 0.10);
+}
+
+.date-box span {
+    color: #9db8ff;
+}
+
+.date-box strong {
+    color: #ffffff;
+}
+
+.stat-card strong {
+    color: var(--text);
+    text-shadow: 0 0 22px rgba(34, 211, 238, 0.16);
+}
+
+.stat-label,
+.stat-card small {
+    color: var(--text-muted);
+}
+
+.small-button {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+}
+
+.small-button:hover {
+    background: rgba(34, 211, 238, 0.14);
+    border-color: var(--border-strong);
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.18);
+}
+
+.dashboard-study-row {
+    border-color: rgba(120, 150, 255, 0.12);
+}
+
+.dashboard-study-row span {
+    color: var(--text-muted);
+}
+
+.dashboard-study-row strong {
+    color: var(--text);
+}
+
+.dashboard-priority-row {
+    border-bottom-color: rgba(120, 150, 255, 0.12);
+}
+
+.dashboard-priority-row strong {
+    color: var(--text);
+}
+
+.dashboard-support-copy {
+    color: var(--text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   7. ASSISTANT
+   --------------------------------------------------------- */
+
+.assistant-conversation {
+    background: rgba(13, 16, 40, 0.60);
+    border: 1px solid var(--border);
+    box-shadow: inset 0 1px 0 rgba(180, 200, 255, 0.05);
+}
+
+.assistant-message {
+    background: linear-gradient(158deg, rgba(30, 36, 80, 0.78), rgba(15, 18, 46, 0.86));
+    border: 1px solid var(--border);
+}
+
+.assistant-message strong {
+    color: #67d8f0;
+}
+
+.assistant-message p {
+    color: var(--text);
+}
+
+.assistant-message time {
+    color: var(--text-muted);
+}
+
+.assistant-message-user {
+    background: linear-gradient(158deg, rgba(34, 211, 238, 0.16), rgba(139, 92, 246, 0.20));
+    border-color: var(--border-strong);
+}
+
+.assistant-composer {
+    background: rgba(21, 25, 55, 0.72);
+    border: 1px solid var(--border);
+}
+
+.assistant-composer textarea {
+    color: var(--text);
+}
+
+.assistant-composer textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.assistant-composer button {
+    background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #8b5cf6 100%);
+    color: #04050d;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(34, 211, 238, 0.24);
+}
+
+.assistant-quick-actions button {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+}
+
+.assistant-quick-actions button:hover {
+    background: rgba(34, 211, 238, 0.14);
+    border-color: var(--border-strong);
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.18);
+}
+
+.assistant-action-row {
+    border-bottom-color: rgba(120, 150, 255, 0.12);
+}
+
+.assistant-action-row span {
+    color: var(--text-muted);
+}
+
+.assistant-action-row strong {
+    color: var(--text-soft);
+}
+
+.automation-boundary {
+    border-left: 2px solid var(--border-strong);
+    background: rgba(120, 150, 255, 0.06);
+    border-radius: 0 12px 12px 0;
+}
+
+.automation-boundary strong {
+    color: var(--text);
+}
+
+.automation-boundary span {
+    color: var(--text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   8. ROUTINES — TASKS / HABITS / GOALS
+   --------------------------------------------------------- */
+
+.routine-summary-strip,
+.learn-today-metrics {
+    background: rgba(120, 150, 255, 0.10);
+    border: 1px solid var(--border);
+}
+
+.routine-summary-strip > div,
+.learn-today-metrics > div {
+    background: rgba(15, 18, 46, 0.72);
+}
+
+.routine-summary-strip span,
+.learn-today-metrics span {
+    color: var(--text-muted);
+}
+
+.routine-summary-strip strong,
+.learn-today-metrics strong {
+    color: var(--primary);
+    text-shadow: 0 0 18px rgba(34, 211, 238, 0.28);
+}
+
+.routine-panel .page-heading > p:last-child,
+.routine-panel .section-header p:last-child,
+.page-heading > p:last-child {
+    color: var(--text-muted);
+}
+
+.task-section-heading h4,
+.habit-section-heading h4,
+.goal-list-header h4 {
+    color: var(--text);
+}
+
+.task-section-heading span,
+.habit-section-heading span,
+.goal-list-header span {
+    color: var(--text-muted);
+}
+
+.rk-task-title,
+.rk-habit-name,
+.rk-goal-title,
+.task-title {
+    color: var(--text);
+}
+
+.rk-task-card.completed,
+.rk-habit-card.completed {
+    background: rgba(15, 18, 46, 0.55);
+}
+
+.rk-task-card.completed .rk-task-title,
+.rk-habit-card.completed .rk-habit-name,
+.task-item.completed .task-title {
+    color: var(--text-muted);
+}
+
+.rk-task-checkbox,
+.rk-habit-checkbox,
+.task-row input[type="checkbox"] {
+    accent-color: #22d3ee;
+}
+
+.rk-task-delete,
+.rk-habit-delete {
+    color: var(--text-muted);
+}
+
+.rk-task-delete:hover,
+.rk-habit-delete:hover,
+.rk-goal-action.delete:hover,
+.delete-task-button:hover {
+    color: var(--danger);
+    background: rgba(251, 113, 133, 0.14);
+}
+
+.rk-goal-action {
+    color: var(--text-muted);
+}
+
+.rk-goal-action:hover {
+    background: rgba(34, 211, 238, 0.12);
+    color: #ffffff;
+}
+
+.rk-goal-date {
+    color: var(--text-muted);
+}
+
+.rk-goal-progress {
+    background: rgba(120, 150, 255, 0.16);
+}
+
+.rk-goal-progress::-webkit-slider-thumb {
+    background: #22d3ee;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.65);
+}
+
+.rk-goal-progress::-moz-range-thumb {
+    background: #22d3ee;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.65);
+}
+
+.rk-goal-progress-value {
+    color: var(--text-soft);
+}
+
+.task-empty-state h4,
+.habit-empty-state h4,
+.goal-empty-state h4,
+.rk-history-empty h4 {
+    color: var(--text);
+}
+
+.task-empty-state p,
+.habit-empty-state p,
+.goal-empty-state p,
+.rk-history-empty p {
+    color: var(--text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   9. LEARN + STUDY + PRACTICE + QUIZ + REVISION
+   --------------------------------------------------------- */
+
+.learn-feature {
+    background: linear-gradient(135deg, rgba(46, 32, 96, 0.55), rgba(15, 18, 46, 0.72));
+}
+
+.learn-focus-panel {
+    background: linear-gradient(145deg, rgba(34, 211, 238, 0.10), rgba(139, 92, 246, 0.14));
+    border-color: var(--border-strong);
+}
+
+.learn-focus-timer-value {
+    color: var(--text);
+    text-shadow: 0 0 30px rgba(34, 211, 238, 0.30);
+}
+
+.learn-current-topic {
+    color: var(--primary);
+}
+
+.learn-study-recommendation {
+    color: var(--text-muted);
+}
+
+.selection-status {
+    color: #67d8f0;
+    border-color: var(--border);
+    background: rgba(34, 211, 238, 0.08);
+}
+
+.focus-presets {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+}
+
+.focus-presets button {
+    color: var(--text-muted);
+}
+
+.focus-presets button.active {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.22), rgba(139, 92, 246, 0.26));
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.22);
+}
+
+.focus-controls button {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+}
+
+.focus-controls button:hover {
+    border-color: var(--border-strong);
+    color: #ffffff;
+}
+
+.learn-tool-row button {
+    background: linear-gradient(158deg, rgba(30, 36, 80, 0.72), rgba(13, 16, 40, 0.80));
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.learn-tool-row button:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.16);
+    transform: translateY(-2px);
+}
+
+.learn-tool-row button span {
+    color: var(--text-muted);
+}
+
+.learn-library-details {
+    border-top: 1px solid var(--border);
+}
+
+.learn-library-details > summary {
+    color: var(--text-soft);
+}
+
+.learn-list li {
+    background: rgba(120, 150, 255, 0.06);
+    border: 1px solid var(--border);
+}
+
+.subject-card.active {
+    border-color: var(--border-strong);
+    background: linear-gradient(158deg, rgba(34, 211, 238, 0.16), rgba(139, 92, 246, 0.18));
+}
+
+.subject-topline {
+    color: #67d8f0;
+}
+
+.study-selected-topic {
+    border-left: 2px solid var(--border-strong);
+}
+
+.study-topic-item.active {
+    border-color: var(--border-strong);
+    background: linear-gradient(158deg, rgba(34, 211, 238, 0.14), rgba(139, 92, 246, 0.16));
+    color: #ffffff;
+}
+
+.practice-option:has(input:checked) {
+    border-color: var(--border-strong);
+    background: linear-gradient(158deg, rgba(34, 211, 238, 0.14), rgba(139, 92, 246, 0.16));
+}
+
+.practice-option-letter {
+    background: rgba(120, 150, 255, 0.16);
+    color: var(--text-soft);
+}
+
+.practice-result.correct {
+    border-color: rgba(52, 211, 153, 0.4);
+    background: rgba(52, 211, 153, 0.10);
+}
+
+.practice-result.incorrect {
+    border-color: rgba(251, 113, 133, 0.36);
+    background: rgba(251, 113, 133, 0.10);
+}
+
+.practice-score-grid strong,
+.revision-today-count strong,
+.quiz-performance-summary strong {
+    color: var(--primary);
+}
+
+.study-progress-item,
+.study-session-row,
+.quiz-history-row,
+.rk-history-row {
+    border-color: rgba(120, 150, 255, 0.12);
+}
+
+.study-progress-item span,
+.study-session-row span,
+.study-session-row time,
+.quiz-history-row span,
+.quiz-history-row time {
+    color: var(--text-muted);
+}
+
+.study-progress-item strong,
+.study-session-row strong,
+.quiz-history-row strong {
+    color: var(--text);
+}
+
+.study-secondary-actions .revision-launch-button,
+.study-secondary-actions .quiz-launch-button {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+}
+
+.study-secondary-actions .revision-launch-button:hover,
+.study-secondary-actions .quiz-launch-button:hover {
+    border-color: var(--border-strong);
+    color: #ffffff;
+}
+
+.study-secondary-actions button {
+    border-top-color: rgba(120, 150, 255, 0.12);
+    color: var(--text-muted);
+}
+
+.quiz-available-count {
+    color: var(--text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   10. PROFILE
+   --------------------------------------------------------- */
+
+.profile-avatar {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.20), rgba(139, 92, 246, 0.26));
+    border: 1px solid var(--border-strong);
+    color: #ffffff;
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.20);
+}
+
+.profile-summary-panel h3,
+.profile-edit-panel h3 {
+    color: var(--text);
+}
+
+.profile-summary-panel > p {
+    color: var(--text-muted);
+}
+
+.profile-stat-list div {
+    border-top: 1px solid rgba(120, 150, 255, 0.12);
+}
+
+.profile-stat-list span {
+    color: var(--text-muted);
+}
+
+.profile-stat-list strong {
+    color: var(--text);
+}
+
+.profile-edit-panel label {
+    color: var(--text-soft);
+}
+
+.profile-edit-panel input,
+.profile-edit-panel textarea {
+    background: rgba(9, 11, 28, 0.72);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.profile-edit-panel input::placeholder,
+.profile-edit-panel textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.profile-save-status {
+    color: var(--success);
+}
+
+
+/* ---------------------------------------------------------
+   11. PROGRESS + ANALYTICS + HISTORY + CONSISTENCY
+   --------------------------------------------------------- */
+
+.progress-overview-card {
+    background:
+        radial-gradient(130% 160% at 100% 0%, rgba(34, 211, 238, 0.20), transparent 58%),
+        linear-gradient(135deg, rgba(76, 46, 148, 0.92), rgba(15, 18, 46, 0.96));
+    border: 1px solid rgba(139, 92, 246, 0.36);
+    color: #ffffff;
+    box-shadow:
+        var(--shadow),
+        inset 0 1px 0 rgba(200, 210, 255, 0.10);
+}
+
+.progress-label {
+    color: #9db8ff;
+}
+
+.progress-overview-card p {
+    color: #c3cdec;
+}
+
+.overall-score {
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(34, 211, 238, 0.45);
+}
+
+.overall-progress-track {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.overall-progress-fill {
+    background: linear-gradient(90deg, #22d3ee 0%, #3b82f6 55%, #8b5cf6 100%);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.55);
+}
+
+.analytics-percent {
+    color: #67d8f0;
+}
+
+.analytics-card h3 {
+    color: var(--text);
+}
+
+.analytics-card p {
+    color: var(--text-muted);
+}
+
+.analytics-track {
+    background: rgba(120, 150, 255, 0.14);
+}
+
+.analytics-fill {
+    background: linear-gradient(90deg, #22d3ee 0%, #3b82f6 55%, #8b5cf6 100%);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.40);
+}
+
+.analytics-neutral {
+    opacity: 0.35;
+}
+
+.progress-note h4 {
+    color: var(--text);
+}
+
+.progress-note p {
+    color: var(--text-muted);
+}
+
+.rk-history-header,
+.rk-consistency-header {
+    border-bottom: 1px solid rgba(120, 150, 255, 0.12);
+}
+
+.rk-history-label,
+.rk-consistency-label {
+    color: #67d8f0;
+}
+
+.rk-history-header h3,
+.rk-consistency-header h3 {
+    color: var(--text);
+}
+
+.rk-history-header p,
+.rk-consistency-header p {
+    color: var(--text-muted);
+}
+
+.rk-history-count {
+    background: rgba(34, 211, 238, 0.12);
+    color: #67d8f0;
+}
+
+.rk-history-row {
+    border-bottom: 1px solid rgba(120, 150, 255, 0.10);
+}
+
+.rk-history-date strong,
+.rk-history-score strong {
+    color: var(--text);
+}
+
+.rk-history-date span,
+.rk-history-stat span,
+.rk-history-score span {
+    color: var(--text-muted);
+}
+
+.rk-history-stat strong {
+    color: var(--text-soft);
+}
+
+.rk-consistency-stats {
+    border-bottom: 1px solid rgba(120, 150, 255, 0.12);
+}
+
+.rk-consistency-stat + .rk-consistency-stat {
+    border-left: 1px solid rgba(120, 150, 255, 0.12);
+}
+
+.rk-consistency-stat span {
+    color: var(--text-muted);
+}
+
+.rk-consistency-stat strong {
+    color: var(--text);
+}
+
+.rk-consistency-progress-top span {
+    color: var(--text-muted);
+}
+
+.rk-consistency-progress-top strong {
+    color: var(--text);
+}
+
+.rk-consistency-track {
+    background: rgba(120, 150, 255, 0.14);
+}
+
+.rk-consistency-fill {
+    background: linear-gradient(90deg, #22d3ee 0%, #3b82f6 55%, #8b5cf6 100%);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.40);
+}
+
+.rk-consistency-progress p {
+    color: var(--text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   12. FORMS / INPUTS / BUTTONS
+   --------------------------------------------------------- */
+
+#task-title,
+.task-input-group input#task-title,
+.habit-input-group input#habit-name,
+.goal-input-row input,
+.practice-filters select {
+    background: rgba(9, 11, 28, 0.72);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+#task-title::placeholder,
+.task-input-group input#task-title::placeholder,
+.habit-input-group input#habit-name::placeholder,
+.goal-input-row input::placeholder {
+    color: var(--text-muted);
+}
+
+#task-title:focus,
+.task-input-group input#task-title:focus,
+.habit-input-group input#habit-name:focus,
+.goal-input-row input:focus,
+.practice-filters select:focus {
+    border-color: var(--border-strong);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.16), 0 0 18px rgba(34, 211, 238, 0.14);
+    outline: none;
+}
+
+.primary-button,
+.learn-current-study .primary-button,
+.focus-controls .primary-button,
+.study-secondary-actions .practice-launch-button {
+    background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #8b5cf6 100%);
+    color: #04050d;
+    font-weight: 700;
+    box-shadow:
+        0 10px 26px rgba(34, 211, 238, 0.22),
+        inset 0 0 0 1px rgba(180, 220, 255, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+}
+
+.primary-button:hover,
+.learn-current-study .primary-button:hover,
+.focus-controls .primary-button:hover,
+.study-secondary-actions .practice-launch-button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 14px 34px rgba(34, 211, 238, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.primary-button:active {
+    transform: translateY(1px);
+}
+
+.primary-button:disabled,
+.quiz-start-button:disabled {
+    opacity: 0.45;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.secondary-button {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+}
+
+.secondary-button:hover {
+    border-color: var(--border-strong);
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.16);
+}
+
+.danger-button {
+    border: 1px solid rgba(251, 113, 133, 0.36);
+    color: var(--danger);
+}
+
+.list-pill {
+    background: rgba(34, 211, 238, 0.12);
+    color: #67d8f0;
+}
+
+
+/* ---------------------------------------------------------
+   13. MODALS / DIALOGS
+   --------------------------------------------------------- */
+
+.study-note-dialog {
+    background: linear-gradient(160deg, rgba(23, 27, 60, 0.96), rgba(9, 11, 28, 0.97));
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    box-shadow:
+        var(--shadow),
+        0 0 40px rgba(34, 211, 238, 0.10);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: rk-dialog-in 0.22s ease-out;
+}
+
+.study-note-dialog::backdrop {
+    background: rgba(3, 4, 12, 0.68);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.study-note-dialog-header {
+    border-bottom: 1px solid var(--border);
+}
+
+.study-note-dialog-header h3 {
+    color: var(--text);
+}
+
+.study-note-close {
+    background: rgba(120, 150, 255, 0.10);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.study-note-close:hover {
+    background: rgba(34, 211, 238, 0.16);
+    border-color: var(--border-strong);
+    color: #ffffff;
+}
+
+.study-note-content {
+    color: var(--text-soft);
+}
+
+.practice-question-subject,
+.practice-question-text {
+    color: var(--text);
+}
+
+.practice-source,
+.study-empty-state {
+    color: var(--text-muted);
+}
+
+.practice-answer-error {
+    color: var(--danger);
+}
+
+.revision-section > h4 {
+    color: var(--text);
+}
+
+.revision-topic-heading strong {
+    color: var(--text);
+}
+
+.revision-topic-heading span,
+.revision-accuracy {
+    color: var(--text-muted);
+}
+
+.revision-topic-actions button {
+    background: rgba(120, 150, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+}
+
+.revision-topic-actions button:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    color: #ffffff;
+}
+
+.revision-topic-actions button:disabled {
+    opacity: 0.45;
+}
+
+.quiz-history-heading h4 {
+    color: var(--text);
+}
+
+
+/* ---------------------------------------------------------
+   14. ICON CONTAINERS
+   --------------------------------------------------------- */
+
+.empty-icon,
+.task-empty-state .empty-icon,
+.habit-empty-state .empty-icon,
+.goal-empty-icon,
+.rk-history-empty-icon,
+.analytics-icon,
+.progress-note-icon,
+.rk-consistency-icon {
+    background: linear-gradient(158deg, rgba(34, 211, 238, 0.14), rgba(139, 92, 246, 0.16));
+    border: 1px solid var(--border);
+    color: #67d8f0;
+    box-shadow: inset 0 1px 0 rgba(180, 200, 255, 0.08);
+}
+
+
+/* ---------------------------------------------------------
+   15. MOTION
+   --------------------------------------------------------- */
+
+@keyframes rk-dialog-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes rk-section-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-section.active-section {
+    animation: rk-section-in 0.28s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   16. MOBILE REFINEMENTS (bottom navigation + spacing)
+   --------------------------------------------------------- */
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        background: linear-gradient(180deg, rgba(13, 16, 40, 0.94), rgba(7, 9, 24, 0.97));
+        border-top: 1px solid var(--border-strong);
+        box-shadow:
+            0 -12px 40px rgba(2, 4, 18, 0.6),
+            inset 0 1px 0 rgba(120, 150, 255, 0.08);
+    }
+
+    .nav-item {
+        background: transparent;
+        border: 1px solid transparent;
+        color: var(--text-muted);
+    }
+
+    .nav-item span {
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    .nav-item.active {
+        background: linear-gradient(180deg, rgba(34, 211, 238, 0.16), rgba(139, 92, 246, 0.18));
+        color: #ffffff;
+        border-color: var(--border-strong);
+        box-shadow:
+            0 -2px 18px rgba(34, 211, 238, 0.22),
+            inset 0 1px 0 rgba(180, 220, 255, 0.12);
+    }
+
+    .system-status {
+        background: var(--surface);
+        border: 1px solid var(--border);
+    }
+
+    .welcome-card {
+        border-color: rgba(139, 92, 246, 0.34);
+    }
+}
+
+@media (max-width: 430px) {
+    .topbar h2 {
+        font-size: 22px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-card strong {
+        font-size: 22px;
+    }
+
+    .nav-item {
+        font-size: 9px;
+    }
+}
